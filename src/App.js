@@ -1,16 +1,13 @@
 /* eslint-disable no-eval */
 import './App.css';
-import React, { useState, useEffect, useRef } from 'react';
+import React, { useState} from 'react';
 
 function App() {
 
   const [result, setResult] = useState("");
-  const inputRef =useRef(null);
-
-  useEffect(()=> inputRef.current.focus());
-
+ 
   function handleClick(e){
-    setResult(result.concat(e.target.name));
+    setResult(result+e.target.name);
   }
   function backspace(){
     setResult(result.slice(0,result.length-1))
@@ -22,20 +19,20 @@ function App() {
   function calculate()
   {
     try{
-      setResult(eval(result).toString());
+      setResult(eval(result));
     }
     catch(error)
     {
-      setResult("Error");
+      setTimeout(()=>setResult(""),1000)
+      setResult("Error"); 
     }
   }
   return (
     
     <div className="calc-app">
     
-        <input type="text" value={result} ref={inputRef} />
-      
-
+        <input type="text" id ="screen" value={result}  />
+    
       <div className='keypad'>
         <button id='clear' onClick={clear}>Clear</button>
         <button id='backspace' onClick={backspace}>⌫</button>
@@ -54,7 +51,7 @@ function App() {
         <button className='operator' name="/" onClick={handleClick}>÷</button>
         <button className='operator' name="." onClick={handleClick}>.</button>
         <button className='nums' name="0" onClick={handleClick}>0</button>
-        <button id='result'onClick={calculate}>Result</button>
+        <button id='result' onClick={calculate}>Result</button>
       </div>
     </div>
    
